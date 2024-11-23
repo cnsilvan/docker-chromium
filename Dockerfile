@@ -13,7 +13,7 @@ RUN \
   echo "**** add icon ****" && \
   curl -o \
     /kclient/public/icon.png
-    https://raw.githubusercontent.com/cnsilvan/docker-chromium/refs/heads/master/logo_512.png && \
+    https://raw.githubusercontent.com/cnsilvan/docker-chromium/refs/heads/master/logo_192.png && \
   echo "**** install packages ****" && \
   apt-get update && \
   apt-get install -y --no-install-recommends \
