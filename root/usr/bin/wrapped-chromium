@@ -14,11 +14,14 @@ elif [[ -n "$HTTPS_PROXY" ]]; then
 fi
 # 如果检测到代理，提取代理地址并构造启动参数
 proxy_arg=""
+auth-server-whitelist=""
 if [[ -n "$proxy_server" ]]; then
   # 提取代理地址（去掉用户名密码部分）
   proxy_host=$(echo "$proxy_server" | sed -E 's|https?://([^:@]+:[^:@]+@)?||' | sed -E 's|/.*$||')
   proxy_arg="--proxy-server=http://$proxy_host"
+  auth-server-whitelist="--auth-server-whitelist=$proxy_host"
   echo "Detected proxy: $proxy_host"
+  echo "Detected auth-server-whitelist: $auth-server-whitelist"
 fi
 # Run normally on privved containers or modified un non priv
 if grep -q 'Seccomp:.0' /proc/1/status; then
@@ -30,6 +33,7 @@ if grep -q 'Seccomp:.0' /proc/1/status; then
   --start-maximized \
   --user-data-dir \
   $proxy_arg \
+  $auth-server-whitelist \
   "$@" > /dev/null 2>&1
 else
   ${BIN} \
@@ -42,5 +46,6 @@ else
   --test-type \
   --user-data-dir \
   $proxy_arg \
+  $auth-server-whitelist \
   "$@" > /dev/null 2>&1
 fi
