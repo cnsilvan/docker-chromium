@@ -18,8 +18,9 @@ auth-server-whitelist=""
 if [[ -n "$proxy_server" ]]; then
   # 提取代理地址（去掉用户名密码部分）
   proxy_host=$(echo "$proxy_server" | sed -E 's|https?://([^:@]+:[^:@]+@)?||' | sed -E 's|/.*$||')
+  proxy_host_no_port=$(echo "$proxy_host" | sed -E 's|:.*$||')  # 去掉端口号
   proxy_arg="--proxy-server=http://$proxy_host"
-  auth-server-whitelist="--auth-server-whitelist=$proxy_host"
+  auth-server-whitelist="--auth-server-whitelist=$proxy_host_no_port"
   echo "Detected proxy: $proxy_host"
   echo "Detected auth-server-whitelist: $auth-server-whitelist"
 fi
