@@ -20,9 +20,9 @@ if [[ -n "$proxy_server" ]]; then
   proxy_host=$(echo "$proxy_server" | sed -E 's|https?://([^:@]+:[^:@]+@)?||' | sed -E 's|/.*$||')
   proxy_host_no_port=$(echo "$proxy_host" | sed -E 's|:.*$||')  # 去掉端口号
   proxy_arg="--proxy-server=http://$proxy_host"
-  auth-server-whitelist="--auth-server-whitelist=$proxy_host_no_port"
+  auth_server_whitelist="--auth-server-whitelist=$proxy_host_no_port"
   echo "Detected proxy: $proxy_host"
-  echo "Detected auth-server-whitelist: $auth-server-whitelist"
+  echo "Detected auth_server_whitelist: $auth_server_whitelist"
 fi
 # Run normally on privved containers or modified un non priv
 if grep -q 'Seccomp:.0' /proc/1/status; then
@@ -34,7 +34,7 @@ if grep -q 'Seccomp:.0' /proc/1/status; then
   --start-maximized \
   --user-data-dir \
   $proxy_arg \
-  $auth-server-whitelist \
+  $auth_server_whitelist \
   "$@" > /dev/null 2>&1
 else
   ${BIN} \
@@ -47,6 +47,6 @@ else
   --test-type \
   --user-data-dir \
   $proxy_arg \
-  $auth-server-whitelist \
+  $auth_server_whitelist \
   "$@" > /dev/null 2>&1
 fi
