@@ -14,7 +14,7 @@ elif [[ -n "$HTTPS_PROXY" ]]; then
 fi
 # 如果检测到代理，提取代理地址并构造启动参数
 proxy_arg=""
-auth-server-whitelist=""
+auth_server_whitelist=""
 if [[ -n "$proxy_server" ]]; then
   # 提取代理地址（去掉用户名密码部分）
   proxy_host=$(echo "$proxy_server" | sed -E 's|https?://([^:@]+:[^:@]+@)?||' | sed -E 's|/.*$||')
